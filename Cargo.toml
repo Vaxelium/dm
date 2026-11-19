@@ -1,0 +1,11 @@
+[package]
+name = "dm"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+common = { git = "https://github.com/Vaxelium/common", branch = "main" }
+anyhow = "1"
+rusqlite = { version = "0.42.0", features = ["bundled"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
