@@ -112,6 +112,10 @@ fn run(db: &Db, me: &Identity, request: DmRequest, other: Option<String>) -> Out
         DmRequest::React { id, emoji, .. } => {
             let row = message_in_my_conversation(db, id, &me.id)?;
             let emoji = emoji.trim().to_string();
+            // Custom emoji belong to the server they were made on, so they are not used in direct messages.
+            if common::custom_emoji_name(&emoji).is_some() {
+                return refuse("custom emoji can only be used on the server they belong to");
+            }
             if emoji.is_empty() || emoji.chars().count() > MAX_EMOJI_LEN {
                 return refuse("that is not a reaction");
             }
