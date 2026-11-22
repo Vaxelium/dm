@@ -157,6 +157,15 @@ fn only_the_author_can_edit_or_delete_and_edits_are_marked() {
 }
 
 #[test]
+fn custom_emoji_are_refused_in_direct_messages() {
+    let db = Db::open(":memory:").unwrap();
+    open(&db, &alice(), "bob");
+    let message = send(&db, &alice(), "bob", "hi", None);
+    let refused = error(ask(&db, &bob(), DmRequest::React { token: "t".into(), id: message.id, emoji: ":party:".into() }));
+    assert_eq!(refused, "custom emoji can only be used on the server they belong to");
+}
+
+#[test]
 fn a_reaction_is_added_then_taken_off_by_the_same_person() {
     let db = Db::open(":memory:").unwrap();
     open(&db, &alice(), "bob");
