@@ -252,6 +252,8 @@ fn chat(db: &Db, row: &Row) -> Result<ChatMessage, Refused> {
         pinned: row.pinned,
         report: None,
         image: None,
+        // Direct messages cannot be polls.
+        poll: None,
     })
 }
 
