@@ -255,6 +255,7 @@ fn chat(db: &Db, row: &Row) -> Result<ChatMessage, Refused> {
         // Direct messages cannot be polls.
         poll: None,
         attachment: None,
+        embed: None,
     })
 }
 
